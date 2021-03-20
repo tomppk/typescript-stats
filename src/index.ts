@@ -1,17 +1,12 @@
-import { CSVFileReader } from './CSVFileReader';
+import { MatchReader } from './MatchReader';
+import { MatchResult } from './MatchResult';
 
-const reader = new CSVFileReader('football.csv');
+const reader = new MatchReader('football.csv');
 reader.read();
 
-// enum - enumeration. Object that stores closely related values.
-// Values always either numbers or strings
-// Purpose of enum is to signal other developers important values
-// creates a new type of MatchResult that can be used
-enum MatchResult {
-  HomeWin = 'H',
-  AwayWin = 'A',
-  Draw = 'D',
-}
+// The first element of the first match which is a Date
+// at the first row at first index
+// const dateOfFirstMatch = reader.data[0][0];
 
 let manUnitedWins = 0;
 

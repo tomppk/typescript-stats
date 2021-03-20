@@ -16,6 +16,10 @@ var fs_1 = __importDefault(require("fs"));
 // Properties:
 // data: array of arrays of strings. Save read file contents here
 // filename: string
+// Generics T type of data that the class takes in. Generic class
+// is customized to work with the assigned type of data.
+// When using a generic class we have to pass in the type to
+// customize the class to work with this type.
 var CSVFileReader = /** @class */ (function () {
     function CSVFileReader(filename) {
         this.filename = filename;
@@ -29,7 +33,13 @@ var CSVFileReader = /** @class */ (function () {
             .split('\n')
             .map(function (row) {
             return row.split(',');
-        });
+        })
+            // map over each row and parse values if needed (Date, number,
+            // MatchResult) create new array with these parsed values
+            // Type assertion row[5] as MatchResult
+            // We are passing a reference of mapRow to map, not calling it
+            // Map will call it for every row as it iterates
+            .map(this.mapRow);
     };
     return CSVFileReader;
 }());
