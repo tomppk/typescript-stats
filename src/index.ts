@@ -1,29 +1,31 @@
 import { CSVFileReader } from './CSVFileReader';
 import { MatchReader } from './MatchReader';
-import { MatchResult } from './MatchResult';
+import { WinsAnalysis } from './analyzers/WinsAnalysis';
+import { ConsoleReport } from './reportTargets/ConsoleReport';
+import { Summary } from './Summary';
 
-// Create an object that satisfies the 'DataReader' interface
+// Create an object that satisfies the 'DataReader' interface.
+// Read .csv file
 const csvFileReader = new CSVFileReader('football.csv');
 
 // Create an instance of MatchReader and pass in something
 // satisfying 'DataReader' interface
+// Parse the .csv file and make the data available in
+// MatchResult tuple format in the variable as
+// matchReader.matches property
 const matchReader = new MatchReader(csvFileReader);
 matchReader.load();
 
-// The first element of the first match which is a Date
-// at the first row at first index
-// const dateOfFirstMatch = reader.data[0][0];
+// Create instance of Summary that takes in two objects
+// that satisfy the Analyzer and OutPutTarget interfaces
+// WinsAnalysis takes as argument team name
+const summary = new Summary(
+  new WinsAnalysis('Man United'),
+  new ConsoleReport()
+);
 
-let manUnitedWins = 0;
-
-// Check case where ManU is home team and home team won 'H'
-// and when ManU is away team and away team won 'A'
-for (let match of matchReader.matches) {
-  if (match[1] === 'Man United' && match[5] === MatchResult.HomeWin) {
-    manUnitedWins++;
-  } else if (match[2] === 'Man United' && match[5] === MatchResult.AwayWin) {
-    manUnitedWins++;
-  }
-}
-
-console.log(`Man United won ${manUnitedWins} games.`);
+// Summary class uses WinsAnalysis class to run analysis
+// and ConsoleReport class to report the result of analysis
+// in this method. Method takes as argument an array of
+// MatchResult tuples
+summary.buildAndPrintReport(matchReader.matches);

@@ -17,7 +17,6 @@ export class MatchReader {
   matches: MatchData[] = [];
 
   constructor(public reader: DataReader) {}
-
   // map over each row and parse values if needed (Date, number,
   // MatchResult) create new array with these parsed values
   // Type assertion row[5] as MatchResult

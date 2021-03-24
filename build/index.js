@@ -2,27 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var CSVFileReader_1 = require("./CSVFileReader");
 var MatchReader_1 = require("./MatchReader");
-var MatchResult_1 = require("./MatchResult");
-// Create an object that satisfies the 'DataReader' interface
+var WinsAnalysis_1 = require("./analyzers/WinsAnalysis");
+var ConsoleReport_1 = require("./reportTargets/ConsoleReport");
+var Summary_1 = require("./Summary");
+// Create an object that satisfies the 'DataReader' interface.
+// Read .csv file
 var csvFileReader = new CSVFileReader_1.CSVFileReader('football.csv');
 // Create an instance of MatchReader and pass in something
 // satisfying 'DataReader' interface
+// Parse the .csv file and make the data available in
+// MatchResult tuple format in the variable as
+// matchReader.matches property
 var matchReader = new MatchReader_1.MatchReader(csvFileReader);
 matchReader.load();
-// matchReader.matches
-// The first element of the first match which is a Date
-// at the first row at first index
-// const dateOfFirstMatch = reader.data[0][0];
-var manUnitedWins = 0;
-// Check case where ManU is home team and home team won 'H'
-// and when ManU is away team and away team won 'A'
-for (var _i = 0, _a = matchReader.matches; _i < _a.length; _i++) {
-    var match = _a[_i];
-    if (match[1] === 'Man United' && match[5] === MatchResult_1.MatchResult.HomeWin) {
-        manUnitedWins++;
-    }
-    else if (match[2] === 'Man United' && match[5] === MatchResult_1.MatchResult.AwayWin) {
-        manUnitedWins++;
-    }
-}
-console.log("Man United won " + manUnitedWins + " games.");
+// Create instance of Summary that takes in two objects
+// that satisfy the Analyzer and OutPutTarget interfaces
+// WinsAnalysis takes as argument team name
+var summary = new Summary_1.Summary(new WinsAnalysis_1.WinsAnalysis('Man United'), new ConsoleReport_1.ConsoleReport());
+// Summary class uses WinsAnalysis class to run analysis
+// and ConsoleReport class to report the result of analysis
+// in this method. Method takes as argument an array of
+// MatchResult tuples
+summary.buildAndPrintReport(matchReader.matches);

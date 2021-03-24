@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatchReader = void 0;
 var utils_1 = require("./utils");
+// Class follows composition design pattern. Instead of inheriting read() method
+// from parent class, an interface is defined that a reader class must satisfy.
+// In composition code reuse is achieved by keeping classes separate and loosely
+// coupled through interfaces.
 var MatchReader = /** @class */ (function () {
     function MatchReader(reader) {
         this.reader = reader;
