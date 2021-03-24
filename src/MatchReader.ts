@@ -1,6 +1,7 @@
 import { dateStringToDate } from './utils';
 import { MatchResult } from './MatchResult';
 import { MatchData } from './MatchData';
+import { CSVFileReader } from './CSVFileReader';
 
 // Interface that reader class must satisfy
 interface DataReader {
@@ -14,6 +15,10 @@ interface DataReader {
 // coupled through interfaces.
 
 export class MatchReader {
+  static fromCsv(filename: string): MatchReader {
+    return new MatchReader(new CSVFileReader(filename));
+  }
+
   matches: MatchData[] = [];
 
   constructor(public reader: DataReader) {}

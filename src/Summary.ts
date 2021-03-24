@@ -1,4 +1,6 @@
 import { MatchData } from './MatchData';
+import { WinsAnalysis } from './analyzers/WinsAnalysis';
+import { HtmlReport } from './reportTargets/HtmlReport';
 
 // Define interfaces that classes to analyze and report
 // data must satisfy
@@ -11,6 +13,15 @@ export interface OutputTarget {
 }
 
 export class Summary {
+  // Static methods can be called on the class itself
+  // without needing to create an instance of the class
+  // e.g. Summary.winsAnalysisWithHtmlReport()
+  // Returns an instance of Summary with predefined
+  // analysis and report object loaded into it
+  static winsAnalysisWithHtmlReport(team: string): Summary {
+    return new Summary(new WinsAnalysis(team), new HtmlReport());
+  }
+
   constructor(public analyzer: Analyzer, public outputTarget: OutputTarget) {}
 
   // Calls run() method of the Analyzer given as

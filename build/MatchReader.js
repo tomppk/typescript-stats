@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatchReader = void 0;
 var utils_1 = require("./utils");
+var CSVFileReader_1 = require("./CSVFileReader");
 // Class follows composition design pattern. Instead of inheriting read() method
 // from parent class, an interface is defined that a reader class must satisfy.
 // In composition code reuse is achieved by keeping classes separate and loosely
@@ -11,6 +12,9 @@ var MatchReader = /** @class */ (function () {
         this.reader = reader;
         this.matches = [];
     }
+    MatchReader.fromCsv = function (filename) {
+        return new MatchReader(new CSVFileReader_1.CSVFileReader(filename));
+    };
     // map over each row and parse values if needed (Date, number,
     // MatchResult) create new array with these parsed values
     // Type assertion row[5] as MatchResult
