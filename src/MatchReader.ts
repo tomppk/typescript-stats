@@ -1,9 +1,6 @@
-import { dateStringToDate } from '../utils';
-import { MatchResult } from '../MatchResult';
-
-// Create a new type MatchData that is a tuple. Defines the
-// structure and order of MatchData array
-type MatchData = [Date, string, string, number, number, MatchResult, string];
+import { dateStringToDate } from './utils';
+import { MatchResult } from './MatchResult';
+import { MatchData } from './MatchData';
 
 // Interface that reader class must satisfy
 interface DataReader {
@@ -15,6 +12,7 @@ interface DataReader {
 // from parent class, an interface is defined that a reader class must satisfy.
 // In composition code reuse is achieved by keeping classes separate and loosely
 // coupled through interfaces.
+
 export class MatchReader {
   matches: MatchData[] = [];
 
